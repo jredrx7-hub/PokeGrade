@@ -3,7 +3,7 @@
 <body><div class="app">
 <header><div class="logo">◉ <b>Poke<span>Grade</span></b><small>PRE-GRADE LAB</small></div><button id="help">?</button></header>
 <main>
-<section id="home" class="screen active"><div class="hero"><div class="target">⌗</div><h1>Scan. Analyze.<br><span>Pre-Grade.</span></h1><p>Use your phone camera to inspect Pokémon cards before you submit them.</p><img class="hero-card" src="sample-ho-oh.jpg"><button class="primary" id="start">SCAN A CARD</button><button class="secondary" id="sample">TRY SAMPLE HO-OH</button><div class="privacy">Your photos stay on this device in this prototype.</div></div></section>
+<section id="home" class="screen active"><div class="hero"><div class="engine" id="engineStatus">Loading CV engine…</div><div class="target">⌗</div><h1>Scan. Analyze.<br><span>Pre-Grade.</span></h1><p>Use your phone camera to inspect Pokémon cards before you submit them.</p><img class="hero-card" src="sample-ho-oh.jpg"><button class="primary" id="start">SCAN A CARD</button><button class="secondary" id="sample">TRY SAMPLE HO-OH</button><div class="privacy">Your photos stay on this device in this prototype.</div></div></section>
 
 <section id="scan" class="screen"><div class="title"><button class="back" data-back="home">‹</button><h2>Scan Card</h2><button id="torch">ϟ</button></div>
 <div class="steps"><b>1</b><span>Capture</span><i></i><b>2</b><span>Inspect</span><i></i><b>3</b><span>Grade</span></div>
@@ -13,21 +13,21 @@
 <p class="hint">For the strongest result, shoot straight-on in bright, even light. Add a second angled photo for surface inspection.</p></section>
 
 <section id="identify" class="screen"><div class="title"><button class="back" data-back="scan">‹</button><h2>Card Detected</h2><span class="ok">✓</span></div>
-<img id="cardImage" class="identified"><div class="identity"><h1>Ho-Oh</h1><p>Mega Evolution — Chaos Rising</p><p>010/086 • Holo Rare</p></div>
-<div class="checks"><div>Card boundary <b>✓ Detected</b></div><div>Text region <b>✓ Readable</b></div><div>Perspective <b>⚠ Slight angle</b></div><div>Holographic glare <b>⚠ Present</b></div></div>
-<div class="analysis-note"><b>Next:</b> we'll measure centering and inspect visible corners/edges. Surface defects need additional lighting angles.</div>
+<img id="cardImage" class="identified"><div class="identity"><h1 id="identityName">Pokémon card</h1><p id="identitySet">Identification pending</p><p id="identityDetails">Waiting for image analysis</p></div>
+<div id="checks" class="checks"><div>Card boundary <b>✓ Detected</b></div><div>Text region <b>✓ Readable</b></div><div>Perspective <b>⚠ Slight angle</b></div><div>Holographic glare <b>⚠ Present</b></div></div>
+<div id="analysisNote" class="analysis-note"><b>Image analysis:</b> Measuring card geometry and visible image quality…</div>
 <button class="primary" id="analyze">RUN PRE-GRADE</button></section>
 
 <section id="result" class="screen"><div class="title"><button class="back" data-back="identify">‹</button><h2>Pre-Grade</h2><button id="share">↗</button></div>
 <div class="result-head"><img id="resultImage"><div><h2>Ho-Oh</h2><p>Mega Evolution — Chaos Rising</p><small>010/086 • Holo Rare</small></div></div>
-<div class="gradebox"><small>ESTIMATED GRADE RANGE</small><strong id="grade">8.0–9.0</strong><b>Near Mint</b><p>Confidence <em>Medium</em></p></div>
-<div class="subgrades"><h3>Condition breakdown</h3><div><span>Centering</span><b>8.5</b><meter value=".85"></meter></div><div><span>Corners</span><b>8.0</b><meter value=".8"></meter></div><div><span>Edges</span><b>8.5</b><meter value=".85"></meter></div><div><span>Surface</span><b>8.5*</b><meter value=".85"></meter></div></div>
-<div class="warning"><b>⚠ Photo limitation</b><span>Holographic glare and slight perspective reduce surface confidence. This is a pre-grade estimate, not a professional grading guarantee.</span></div>
-<div class="nextshots"><b>Improve confidence</b><span>Capture: straight front • straight back • 30–45° light reflection.</span></div>
+<div class="gradebox"><small>ESTIMATED PRE-GRADE RANGE</small><strong id="grade">—</strong><b id="gradeLabel">Analyzing</b><p>Confidence <em id="confidence">—</em></p></div>
+<div class="subgrades"><h3>Condition breakdown</h3><div><span>Centering</span><b id="centeringScore">—</b><meter id="centeringMeter" value="0"></meter></div><div><span>Corners</span><b id="cornersScore">—</b><meter id="cornersMeter" value="0"></meter></div><div><span>Edges</span><b id="edgesScore">—</b><meter id="edgesMeter" value="0"></meter></div><div><span>Surface</span><b id="surfaceScore">—</b><meter id="surfaceMeter" value="0"></meter></div></div>
+<div id="resultWarning" class="warning"><b>Computer vision</b><span>Analyzing the image.</span></div>
+<div id="nextShots" class="nextshots"><b>Improve confidence</b><span>Analyzing.</span></div>
 <button class="primary" id="save">SAVE SCAN</button></section>
 
 <section id="collection" class="screen"><div class="title"><span></span><h2>Collection</h2><span></span></div><div class="stats"><div><small>Scans</small><b id="count">0</b></div><div><small>Avg. Grade</small><b>8.5</b></div><div><small>Mode</small><b>Local</b></div></div><div id="cards" class="grid"></div></section>
 </main>
 <nav><button class="active" data-nav="home">⌂<small>Home</small></button><button data-nav="scan">◷<small>Scan</small></button><button data-nav="collection">▣<small>Collection</small></button><button data-nav="more">☷<small>More</small></button></nav>
-<div id="more" class="modal"><div><button class="close" id="closeMore">×</button><h2>PokeGrade</h2><p>v0.3 • Mobile-first prototype</p><p>Next engineering milestone: replace the demo identification/grade with trained card-recognition and condition models.</p></div></div><div id="toast"></div></div>
-<script src="app.js"></script></body></html>
+<div id="more" class="modal"><div><button class="close" id="closeMore">×</button><h2>PokeGrade</h2><p>v0.4 • Browser computer-vision pipeline</p><p>Real card-boundary detection, perspective correction, image-quality scoring and condition proxies now run from the captured image. Card identity/database lookup and trained defect models remain a later milestone.</p></div></div><div id="toast"></div></div>
+<script src="https://docs.opencv.org/4.x/opencv.js" onload="onOpenCvReady()"></script><script src="app.js"></script></body></html>
